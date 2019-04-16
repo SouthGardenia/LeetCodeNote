@@ -15,7 +15,7 @@ package com.leetcode.note.easy;
  */
 public class LongestCommonPrefix {
     public static void main(String[] args) {
-        System.out.println(longestCommonPrefix2(new String[]{"flower","flower1231","flight"}));
+        System.out.println(longestCommonPrefix2(new String[]{"flower","flow","flight"}));
     }
 
     /**
@@ -37,7 +37,7 @@ public class LongestCommonPrefix {
                 for (int i = 1; i < strs.length; i++) {
                     //当前字符串是否够长 || 当前字符串的第j个字符与字符数组的j个字符是否相等
                     if (strs[i].length() <= j || strs[i].charAt(j) != headStringChars[j]){
-                        //返回符合公共前缀
+                        //返回公共前缀
                         return strs[0].substring(0, j);
                     }
                 }
@@ -57,14 +57,17 @@ public class LongestCommonPrefix {
         } else if (strs.length == 1) {
             return strs[0];
         } else {
+            //取字符串数组中最短的字符串
             int minLength = Integer.MAX_VALUE;
             for (String str : strs) {
                 minLength = Math.min(minLength, str.length());
             }
-            int low = 1;
-            int high = minLength;
+            //low:最短位置，high:最长位置
+            int low = 0, high = minLength;
             while (low <= high) {
+                //取中间位置
                 int middle = (low + high) / 2;
+                //前半区满足则在后半区继续折半查找，前半区不满足则在前半区继续折半查找
                 if (isCommonPrefix(strs, middle)) {
                     low = middle + 1;
                 } else {
